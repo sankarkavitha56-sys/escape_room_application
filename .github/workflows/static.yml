@@ -29,13 +29,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # Removed cache to prevent lockfile error
 
       - name: Install dependencies
+        # This tells GitHub to look inside your project subfolder
         run: npm install
+        working-directory: .
 
       - name: Build project
         run: npm run build
+        working-directory: .
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,6 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # If your files are in a subfolder, this changes to './SUBFOLDER_NAME/dist'
           path: './dist'
 
       - name: Deploy to GitHub Pages
